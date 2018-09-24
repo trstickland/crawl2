@@ -4,3 +4,7 @@
 .settings
 
 /bin
+# Vagrant-related files
+.vagrant
+build.gradle.old
+ubuntu-xenial-*-cloudimg-console.log
