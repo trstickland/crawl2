@@ -76,7 +76,10 @@ Vagrant.configure("2") do |config|
   # documentation for more information about their specific syntax and use.
   config.vm.provision "shell", inline: <<-SHELL
       apt-get -qq update
-      apt-get install --yes openjdk-8-jre openjdk-8-jdk
+      # downgrade to java 7
+      add-apt-repository ppa:openjdk-r/ppa
+      apt-get update
+      apt-get install --yes openjdk-7-jdk
       # Crawl2 build (gradle)
       PREVIOUS_DIR=`pwd`
       cd /vagrant
@@ -94,7 +97,7 @@ Vagrant.configure("2") do |config|
       perl -0777 -pe 's~([^\n]*maven\s*\{.*\n+)([^\n]*url\s+"https://developer\.genedb\.org/nexus/.*"\s*\n+)([^\n]*}\s*\n+)~// \\1// \\2// \\3~g' build.gradle.old > build.gradle
       # 
       ###  end of alternative gradle/nexus blocks #############################
-      ./gradlew build  --info
+      ./gradlew build --debug
       cd $PREVIOUS_DIR
       # for convenience, link from vagrant home dir to host machine git repo
       ln -s /vagrant /home/vagrant/Crawl2
