@@ -4,6 +4,9 @@
 .settings
 
 /bin
+# files created by gradle build
+/build/
+/es/
 # Vagrant-related files
 .vagrant
 build.gradle.old
