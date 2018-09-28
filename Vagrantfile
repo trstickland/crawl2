@@ -97,7 +97,7 @@ Vagrant.configure("2") do |config|
       perl -0777 -pe 's~([^\n]*maven\s*\{.*\n+)([^\n]*url\s+"https://developer\.genedb\.org/nexus/.*"\s*\n+)([^\n]*}\s*\n+)~// \\1// \\2// \\3~g' build.gradle.old > build.gradle
       # 
       ###  end of alternative gradle/nexus blocks #############################
-      ./gradlew build --debug
+      ./gradlew build --info
       cd $PREVIOUS_DIR
       # for convenience, link from vagrant home dir to host machine git repo
       ln -s /vagrant /home/vagrant/Crawl2

@@ -26,8 +26,8 @@ jar.enabled = true
  */
 version = '0.1'
 
-sourceCompatibility = 1.6
-targetCompatibility = 1.6
+sourceCompatibility = 1.7
+targetCompatibility = 1.7
 logging.captureStandardOutput LogLevel.INFO
 //configurations.compile.transitive = true
 
@@ -139,7 +139,11 @@ repositories {
 	maven {
         url "http://repository.springsource.com/maven/bundles/milestone"
 	}
-
+// 	// repo for XStream
+// 	maven {
+//         url "http://repo1.maven.org/maven2/"
+//    }
+   
 	// never use this!
     // mavenCentral()
 }
@@ -191,6 +195,8 @@ dependencies {
 
     compile group:'jgrapht', name:'jgrapht', version: '0.7.3'
 
+//     compile group:'com.thoughtworks.xstream', name: 'xstream', version: '1.4.10'
+    
 	// finally, any jars in lib/local
     compile fileTree(dir: local_lib_dir, includes: ['**.jar'])
     compile fileTree(dir: local_experimental_dir, includes: ['**.jar'])
