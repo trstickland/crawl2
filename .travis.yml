@@ -1,7 +1,19 @@
-language: java
-jdk:
-  - openjdk7
+dist: trusty
+sudo: required
+services:
+   - docker
+
+env:
+  global:
+    - ROOTDIR="$TRAVIS_BUILD_DIR"
+
+before_install:
+  - docker build -t crawl2_ci_image .
+  - docker run -dit -v $TRAVIS_BUILD_DIR:/tmp/crawl2_ci --name crawl2_ci_container crawl2_ci_image /bin/bash
+
 cache:
   directories:
-    - lib/cached
-sudo: false
+    - work
+
+script:
+  - docker exec crawl2_ci_container /bin/bash -c 'cd ./crawl2 && ./gradlew assemble --info'
