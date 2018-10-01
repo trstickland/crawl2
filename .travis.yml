@@ -16,4 +16,4 @@ cache:
     - work
 
 script:
-  - docker exec crawl2_ci_container /bin/bash -c 'cd ./crawl2 && ./gradlew assemble --info'
+  - docker exec crawl2_ci_container /bin/bash -c 'cd $TRAVIS_BUILD_DIR && ./gradlew assemble --info'
