@@ -9,11 +9,11 @@ env:
 
 before_install:
   - docker build -t crawl2_ci_image .
-  - docker run -dit -v $TRAVIS_BUILD_DIR:/tmp/crawl2_ci --name crawl2_ci_container crawl2_ci_image /bin/bash
+  - docker run -dit --name crawl2_ci_container crawl2_ci_image /bin/bash
 
 cache:
   directories:
     - work
 
 script:
-  - docker exec crawl2_ci_container /bin/bash -c 'cd $TRAVIS_BUILD_DIR && ./gradlew assemble --info'
+  - docker exec crawl2_ci_container /bin/bash -c './gradlew assemble --info'
