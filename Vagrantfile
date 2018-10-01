@@ -79,24 +79,10 @@ Vagrant.configure("2") do |config|
       # downgrade to java 7
       add-apt-repository ppa:openjdk-r/ppa
       apt-get update
-      apt-get install --yes openjdk-7-jdk
+      apt-get install --yes openjdk-7-jdk maven
       # Crawl2 build (gradle)
       PREVIOUS_DIR=`pwd`
       cd /vagrant
-      ###  uncomment this block to get gradle to use local nexus repos ########
-      # 
-      # key for local nexus repo
-      # openssl s_client -connect developer.genedb.org:443 2>&1 | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' > /tmp/developer.genedb.org
-      # mkdir -p /Library/Java/Home/lib/security/cacerts
-      # keytool -import -alias developer.genedb.org -trustcacerts -noprompt -storepass changeit -keystore /Library/Java/Home/lib/security/cacerts -file /tmp/developer.genedb.org
-      # 
-      ###  uncomment this block to prevent gradle using local nexus repos #####
-      # 
-      # comment out nexus repo URLs in gradle build file
-      mv build.gradle build.gradle.old
-      perl -0777 -pe 's~([^\n]*maven\s*\{.*\n+)([^\n]*url\s+"https://developer\.genedb\.org/nexus/.*"\s*\n+)([^\n]*}\s*\n+)~// \\1// \\2// \\3~g' build.gradle.old > build.gradle
-      # 
-      ###  end of alternative gradle/nexus blocks #############################
       ./gradlew build --info
       cd $PREVIOUS_DIR
       # for convenience, link from vagrant home dir to host machine git repo
