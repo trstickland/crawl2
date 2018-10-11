@@ -13,6 +13,7 @@ import org.genedb.crawl.model.Organism;
 
 import junit.framework.TestCase;
 
+// uncomment if XStream is required
 // import com.thoughtworks.xstream.XStream;
 
 /**
@@ -39,6 +40,7 @@ public class ClientTest extends TestCase {
     public void testListRegions() throws CrawlException, IOException {
 
         CrawlClient client = new CrawlClient(baseURL);
+// uncomment if XStream is required
 //         XStream xstream = new XStream();
 
         List<Organism> organisms = client.request(List.class, Organism.class, "organisms", "list", null);
@@ -55,28 +57,33 @@ public class ClientTest extends TestCase {
 
                 if (n == 0) {
                     
-                    assertTrue(region.uniqueName != null);
+                     assertTrue(region.uniqueName != null);
                     
-                    logger.info("  -" + region.uniqueName);
+                     logger.info("  -" + region.uniqueName);
 
-                    Map<String, String[]> locationsParameters = new HashMap<String, String[]>();
-                    locationsParameters.put("region", new String[] { region.uniqueName });
+                     Map<String, String[]> locationsParameters = new HashMap<String, String[]>();
+                     locationsParameters.put("region", new String[] { region.uniqueName });
 
-                    locationsParameters.put("start", new String[] { "1" });
-                    locationsParameters.put("end", new String[] { "1000000" });
-                    locationsParameters.put("exclude", new String[] { "false" });
-                    locationsParameters.put("types", new String[] { "gene" });
-// logger.info("\nparams for features query:\n" + xstream.toXML(locationsParameters));
-                    
-                    List<LocatedFeature> features = client.<List> request(List.class, LocatedFeature.class, "regions", "locations", locationsParameters);
+                     locationsParameters.put("start", new String[] { "1" });
+                     locationsParameters.put("end", new String[] { "1000000" });
+                     locationsParameters.put("exclude", new String[] { "false" });
+                     locationsParameters.put("types", new String[] { "gene" });
+                     // logger.info("\nparams for features query:\n" + xstream.toXML(locationsParameters));
 
-                    if (features.size() > 0) {
-                        LocatedFeature feature = features.get(0);
-if(feature.uniqueName.equals("RNAzID:13")) {
- logger.info("\n************************\n   SKIPPING " + feature.uniqueName + "\n************************\n");
-} else {
+                     List<LocatedFeature> features = client.<List> request(List.class, LocatedFeature.class, "regions", "locations", locationsParameters);
+                     // // extract first feature (provided there is at least one feature)
+                     // if (features.size() > 0) {
+                     //    LocatedFeature feature = features.get(0);
+                     // extract first feature that isn't obsolete (provided there is at least one non-obsolete feature)
+                     // (would be better to rewrite the query method to aexclude obsolete features from the results set, obvs.)
+                     LocatedFeature feature = null;
+                     for(int f = 0;  f < features.size() && (0 == f || true == feature.isObsolete ); f = f + 1) {
+                        feature = features.get(f);
+                        logger.info("   (checking if " + f + ": " + feature.uniqueName + " is flagged as obsolete)" );
+                     }
+                     if (feature != null) {
                         assertTrue(feature.uniqueName != null);
-                        
+
                         Map<String, String[]> infoParameters = new HashMap<String, String[]>();
                         infoParameters.put("uniqueName", new String[] { feature.uniqueName });
 
@@ -86,9 +93,8 @@ if(feature.uniqueName.equals("RNAzID:13")) {
                         for (Feature child : gene.children) {
                             logger.info("    -" + child.uniqueName);
                         }
-}
-                    }
-                    
+                     }
+
                 }
 
                 n++;

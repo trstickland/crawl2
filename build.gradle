@@ -139,7 +139,7 @@ repositories {
 	maven {
         url "http://repository.springsource.com/maven/bundles/milestone"
 	}
-// 	// repo for XStream
+// uncomment if XStream is required
 // 	maven {
 //         url "http://repo1.maven.org/maven2/"
 //    }
@@ -195,6 +195,7 @@ dependencies {
 
     compile group:'jgrapht', name:'jgrapht', version: '0.7.3'
 
+// uncomment if XStream is required
 //     compile group:'com.thoughtworks.xstream', name: 'xstream', version: '1.4.10'
     
 	// finally, any jars in lib/local
