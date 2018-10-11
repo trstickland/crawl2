@@ -79,7 +79,7 @@ public class ClientTest extends TestCase {
                      LocatedFeature feature = null;
                      for(int f = 0;  f < features.size() && (0 == f || true == feature.isObsolete ); f = f + 1) {
                         feature = features.get(f);
-                        logger.info("   (checking if " + f + ": " + feature.uniqueName + " is flagged as obsolete)" );
+                        logger.info("   (checking if feature " + (f+1) + ": " + feature.uniqueName + " is flagged as obsolete)" );
                      }
                      if (feature != null) {
                         assertTrue(feature.uniqueName != null);
